@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loading…</title>
+<meta name="description" content="">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DISENYO LANG ANG NANDITO. Ang laman ay nasa content.js.
+   Ang mga kulay sa :root ay pinapalitan ng theme{} sa content.js.
+   ============================================================ */
+:root{
+  --bg:#0E1012; --surface:#16191C; --line:#2A3036;
+  --text:#E9ECE8; --muted:#89929A;
+  --accent:#C9F24D; --flag:#E8A33D; --sync:#C9F24D;
+  --w:1140px; --gap:clamp(64px,8vw,124px);
+  --sans:"Space Grotesk",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:100%;max-width:var(--w);margin:0 auto;padding:0 24px}
+img{max-width:100%;display:block}
+
+h1,h2,h3,h4{font-weight:700;letter-spacing:-.025em;line-height:1.05;margin:0}
+h2{font-size:clamp(32px,4.6vw,56px)}
+h3{font-size:clamp(21px,2.3vw,27px);line-height:1.2}
+h4{font-size:18px;letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:inherit}
+
+.label{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:.04em;margin:0 0 20px}
+.label::before{content:"// "}
+.lede{font-size:clamp(17px,1.8vw,20px);color:var(--muted);max-width:62ch}
+section{padding:var(--gap) 0;border-top:1px solid var(--line)}
+#top{border-top:0;padding-top:0}
+
+/* header */
+.masthead{position:sticky;top:0;z-index:30;background:rgba(14,16,18,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:64px}
+.mark{font-family:var(--mono);font-size:14px;text-decoration:none;letter-spacing:-.02em}
+.masthead nav{display:flex;gap:24px}
+.masthead nav a{font-family:var(--mono);font-size:13px;color:var(--muted);text-decoration:none}
+.masthead nav a::before{content:"// "}
+.masthead nav a:hover{color:var(--accent)}
+@media(max-width:820px){.masthead nav{display:none}}
+
+/* hero */
+.hero{padding-top:clamp(56px,8vw,104px);padding-bottom:0}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(30px,5vw,68px);align-items:center}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero h1{font-size:clamp(46px,6.6vw,90px);margin-bottom:10px}
+.hero .role{font-family:var(--mono);font-size:clamp(13px,1.5vw,17px);color:var(--muted);margin-bottom:30px}
+.hero .lede{margin-bottom:34px}
+.btnrow{display:flex;flex-wrap:wrap;gap:14px}
+
+.btn{display:inline-block;font-family:var(--mono);font-size:14px;text-decoration:none;padding:15px 26px;border:1px solid var(--accent);color:var(--bg);background:var(--accent);transition:background .18s ease,color .18s ease}
+.btn:hover{background:transparent;color:var(--accent)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* portrait */
+.portrait{position:relative;margin:0;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+.portrait img{width:100%;height:auto;filter:saturate(.9) contrast(1.04)}
+.portrait::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(14,16,18,0) 48%,rgba(14,16,18,.9) 100%)}
+.portrait figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:space-between;gap:14px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.portrait figcaption b{color:var(--accent);font-weight:500}
+@media(max-width:920px){.portrait{max-width:420px}}
+
+/* marquee */
+.marquee{margin-top:clamp(56px,7vw,88px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:16px 0}
+.marquee ul{display:flex;margin:0;padding:0;list-style:none;width:max-content;animation:slide 38s linear infinite}
+.marquee li{font-family:var(--mono);font-size:clamp(13px,1.5vw,16px);color:var(--muted);white-space:nowrap;padding:0 26px;border-right:1px solid var(--line)}
+.marquee li:nth-child(even){color:var(--accent)}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marquee:hover ul{animation-play-state:paused}
+
+/* expertise */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:44px}
+.cards article{background:var(--bg);padding:32px 26px;transition:background .2s ease}
+.cards article:hover{background:var(--surface)}
+.cards .n{font-family:var(--mono);font-size:12px;color:var(--accent);display:block;margin-bottom:18px}
+.cards h3{margin-bottom:12px}
+.cards p{color:var(--muted);font-size:15.5px;margin:0}
+@media(max-width:860px){.cards{grid-template-columns:1fr}}
+
+/* work */
+.filters{display:flex;flex-wrap:wrap;gap:8px 20px;margin:34px 0 10px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.filters span:first-child{color:var(--text)}
+.project{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(24px,4vw,56px);background:var(--surface);border:1px solid var(--line);padding:clamp(26px,3.4vw,42px);margin-top:22px}
+@media(max-width:900px){.project{grid-template-columns:1fr}}
+.project .meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:16px}
+.project h3{margin-bottom:16px;max-width:24ch}
+.project p{color:var(--muted);font-size:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tags span{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);padding:5px 10px}
+.metrics{align-self:start;border-top:1px solid var(--line)}
+.metrics .m{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.metrics .k{font-size:14px;color:var(--muted)}
+.metrics .b{font-family:var(--mono);font-size:14px;color:var(--flag);text-decoration:line-through;text-decoration-thickness:1px}
+.metrics .a{font-family:var(--mono);font-size:16px;color:var(--sync);font-weight:500}
+.metrics .cap{font-family:var(--mono);font-size:11px;color:var(--muted);padding-top:12px;display:block}
+.project.todo{background:transparent;border-style:dashed}
+.project.todo .meta{color:var(--flag)}
+.project.todo em{color:var(--muted)}
+
+/* experience */
+.exp{border-top:1px solid var(--line);margin-top:44px}
+.job{display:grid;grid-template-columns:200px 1fr;gap:8px 40px;padding:30px 0;border-bottom:1px solid var(--line)}
+.job .when{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.job h4{margin-bottom:10px}
+.job p{color:var(--muted);font-size:16px;margin:0}
+.job .tags{margin-top:16px}
+@media(max-width:760px){.job{grid-template-columns:1fr;gap:6px}}
+
+/* quote */
+.quote{background:var(--surface);border:1px solid var(--line);padding:clamp(28px,4vw,48px);margin-top:44px}
+.quote p{font-size:clamp(18px,2.2vw,24px);line-height:1.45;letter-spacing:-.015em;margin-bottom:20px;max-width:34ch}
+.quote cite{font-style:normal;font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* contact */
+.contact h2{max-width:16ch;margin-bottom:22px}
+.contact .avail{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,242,77,.55)}70%{box-shadow:0 0 0 9px rgba(201,242,77,0)}100%{box-shadow:0 0 0 0 rgba(201,242,77,0)}}
+.socials{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:32px;font-family:var(--mono);font-size:14px}
+.socials a{color:var(--muted);text-decoration:none}
+.socials a:hover{color:var(--accent)}
+
+footer{padding:32px 0 48px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* kung may mali sa content.js */
+.boot{max-width:640px;margin:14vh auto;padding:0 24px;font-family:var(--mono);font-size:14px;color:var(--flag);line-height:1.8}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- LAMAN NG SITE. I-edit ang content.js, hindi ang file na ito. -->
+<script src="content.js"></script>
+
+<script>
+(function(){
+  var S = window.SITE;
+  var app = document.getElementById('app');
+
+  if(!S){
+    app.innerHTML = '<div class="boot">Hindi na-load ang content.js.<br><br>'+
+      'Tiyakin na magkasama sa iisang folder ang index.html, content.js, at ang larawan — '+
+      'at na walang typo (nawawalang kuwit o quote) sa content.js. '+
+      'Buksan ang Console (F12) para makita ang eksaktong linya.</div>';
+    return;
+  }
+
+  /* ---------- helpers ---------- */
+  function esc(s){ return String(s == null ? '' : s); }
+  function has(v){ return v != null && String(v).trim() !== ''; }
+  function list(a){ return Array.isArray(a) ? a : []; }
+
+  function btns(arr){
+    return '<div class="btnrow">' + list(arr).map(function(b){
+      return '<a class="btn'+(b.style === 'ghost' ? ' ghost' : '')+'" href="'+esc(b.href)+'">'+esc(b.label)+'</a>';
+    }).join('') + '</div>';
+  }
+  function tags(arr){
+    if(!list(arr).length) return '';
+    return '<div class="tags">' + arr.map(function(t){ return '<span>'+esc(t)+'</span>'; }).join('') + '</div>';
+  }
+  function labelOf(x){ return has(x && x.label) ? '<p class="label">'+esc(x.label)+'</p>' : ''; }
+
+  /* ---------- theme ---------- */
+  if(S.theme){
+    for(var k in S.theme){ document.documentElement.style.setProperty(k, S.theme[k]); }
+  }
+  if(S.meta){
+    if(has(S.meta.title)) document.title = S.meta.title;
+    var md = document.querySelector('meta[name="description"]');
+    if(md && has(S.meta.description)) md.setAttribute('content', S.meta.description);
+  }
+
+  var out = [];
+
+  /* ---------- header ---------- */
+  out.push(
+    '<header class="masthead"><div class="wrap">'+
+      '<a class="mark" href="#top">'+esc(S.brand)+'</a>'+
+      '<nav>'+ list(S.nav).map(function(n){
+        return '<a href="'+esc(n.href)+'">'+esc(n.label)+'</a>';
+      }).join('') +'</nav>'+
+    '</div></header>'
+  );
+
+  /* ---------- hero ---------- */
+  var h = S.hero || {};
+  var photo = has(h.photo)
+    ? '<figure class="portrait"><img src="'+esc(h.photo)+'" alt="'+esc(h.photoAlt || h.name)+'">'+
+      ((has(h.photoLeft) || has(h.photoRight))
+        ? '<figcaption><span>'+esc(h.photoLeft)+'</span><b>'+esc(h.photoRight)+'</b></figcaption>' : '')+
+      '</figure>'
+    : '';
+
+  var marquee = list(S.marquee).length
+    ? '<div class="marquee" aria-hidden="true"><ul>'+
+        list(S.marquee).concat(list(S.marquee)).map(function(m){ return '<li>'+esc(m)+'</li>'; }).join('')+
+      '</ul></div>'
+    : '';
+
+  out.push(
+    '<section id="top" class="hero">'+
+      '<div class="wrap hero-grid"><div>'+
+        '<h1>'+esc(h.name)+'</h1>'+
+        (has(h.role) ? '<p class="role">'+esc(h.role)+'</p>' : '')+
+        (has(h.lede) ? '<p class="lede">'+esc(h.lede)+'</p>' : '')+
+        btns(h.buttons)+
+      '</div>'+ photo +'</div>'+
+      marquee+
+    '</section>'
+  );
+
+  /* ---------- expertise ---------- */
+  if(S.expertise){
+    var e = S.expertise;
+    out.push(
+      '<section id="expertise"><div class="wrap">'+
+        labelOf(e)+
+        (has(e.heading) ? '<h2>'+esc(e.heading)+'</h2>' : '')+
+        (has(e.lede) ? '<p class="lede" style="margin-top:20px">'+esc(e.lede)+'</p>' : '')+
+        '<div class="cards">'+ list(e.items).map(function(it, i){
+          return '<article><span class="n">'+('0'+(i+1)).slice(-2)+'</span>'+
+                 '<h3>'+esc(it.title)+'</h3><p>'+esc(it.text)+'</p></article>';
+        }).join('') +'</div>'+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- work ---------- */
+  if(S.work){
+    var w = S.work;
+    var cases = list(w.cases).map(function(c){
+      var metrics = list(c.metrics).map(function(m){
+        return '<div class="m"><span class="k">'+esc(m.k)+'</span>'+
+               '<span class="b">'+esc(m.before)+'</span>'+
+               '<span class="a">'+esc(m.after)+'</span></div>';
+      }).join('');
+      if(has(c.caption)) metrics += '<span class="cap">'+esc(c.caption)+'</span>';
+
+      return '<article class="project'+(c.draft ? ' todo' : '')+'">'+
+        '<div>'+
+          '<p class="meta">'+(c.draft ? 'Draft — not published yet' : esc(c.meta))+'</p>'+
+          '<h3>'+esc(c.title)+'</h3>'+
+          list(c.body).map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+
+          tags(c.tags)+
+        '</div>'+
+        (metrics ? '<div class="metrics">'+metrics+'</div>' : '')+
+      '</article>';
+    }).join('');
+
+    out.push(
+      '<section id="work"><div class="wrap">'+
+        labelOf(w)+
+        (has(w.heading) ? '<h2>'+esc(w.heading)+'</h2>' : '')+
+        (has(w.lede) ? '<p class="lede" style="margin-top:20px">'+esc(w.lede)+'</p>' : '')+
+        (list(w.filters).length
+          ? '<div class="filters"><span>Filter by</span>'+
+            w.filters.map(function(f){ return '<span>/ '+esc(f)+'</span>'; }).join('')+'</div>'
+          : '')+
+        cases+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- experience ---------- */
+  if(S.experience){
+    var x = S.experience;
+    out.push(
+      '<section id="experience"><div class="wrap">'+
+        labelOf(x)+
+        (has(x.heading) ? '<h2>'+esc(x.heading)+'</h2>' : '')+
+        '<div class="exp">'+ list(x.jobs).map(function(j){
+          return '<article class="job"><span class="when">'+esc(j.when)+'</span>'+
+                 '<div><h4>'+esc(j.title)+'</h4><p>'+esc(j.text)+'</p>'+tags(j.tags)+'</div></article>';
+        }).join('') +'</div>'+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- quote ---------- */
+  if(S.quote && has(S.quote.text)){
+    out.push(
+      '<section id="quote"><div class="wrap">'+
+        labelOf(S.quote)+
+        '<div class="quote"><p>'+esc(S.quote.text)+'</p><cite>'+esc(S.quote.cite)+'</cite></div>'+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- trainings ---------- */
+  if(S.trainings){
+    var tr = S.trainings;
+    out.push(
+      '<section id="trainings"><div class="wrap">'+
+        labelOf(tr)+
+        (has(tr.heading) ? '<h2>'+esc(tr.heading)+'</h2>' : '')+
+        (has(tr.lede) ? '<p class="lede" style="margin-top:20px">'+esc(tr.lede)+'</p>' : '')+
+        '<div class="exp train">'+ list(tr.items).map(function(t){
+          return '<article class="job"><span class="when">'+esc(t.format)+'</span>'+
+                 '<div><h4>'+esc(t.title)+'</h4><p>'+esc(t.text)+'</p>'+tags(t.tags)+'</div></article>';
+        }).join('') +'</div>'+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- contact ---------- */
+  if(S.contact){
+    var c2 = S.contact;
+    out.push(
+      '<section id="contact" class="contact"><div class="wrap">'+
+        labelOf(c2)+
+        (has(c2.availability) ? '<p class="avail"><span class="dot"></span>'+esc(c2.availability)+'</p>' : '')+
+        (has(c2.heading) ? '<h2>'+esc(c2.heading)+'</h2>' : '')+
+        (has(c2.lede) ? '<p class="lede">'+esc(c2.lede)+'</p>' : '')+
+        '<div style="margin-top:30px">'+btns(c2.buttons)+'</div>'+
+        (list(c2.links).length
+          ? '<div class="socials">'+c2.links.map(function(l){
+              return '<a href="'+esc(l.href)+'">'+esc(l.label)+'</a>';
+            }).join('')+'</div>'
+          : '')+
+      '</div></section>'
+    );
+  }
+
+  /* ---------- footer ---------- */
+  if(S.footer){
+    out.push('<footer><div class="wrap"><span>'+esc(S.footer.left)+'</span><span>'+esc(S.footer.right)+'</span></div></footer>');
+  }
+
+  app.innerHTML = out.join('');
+})();
+</script>
+</body>
+</html>
