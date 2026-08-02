@@ -1,5 +1,5 @@
 /* BINUO NG ADMIN — huwag i-edit nang manu-mano.
-   Huling update: 2026-08-02 03:45:25 */
+   Huling update: 2026-08-02 09:56:47 */
 window.SITE = {
     "theme": {
         "--bg": "#0E1012",
@@ -131,6 +131,7 @@ window.SITE = {
         "lede": "The patterns repeat across sectors — the systems adapt to each.",
         "items": [
             "Real Estate",
+            "Government / Public Sector",
             "Hospitality",
             "Vacation Membership",
             "Retail",
@@ -272,15 +273,38 @@ window.SITE = {
         "heading": "Thirty years<br>of systems.",
         "jobs": [
             {
+                "when": "2025 — Present",
+                "title": "Realty Specialist @ 88 Mega Mars Realty Inc.",
+                "text": "Real estate operations — property management, sales and marketing — modernised with digital systems: CRM, listings, online reservations, lead and marketing automation, and analytics dashboards.",
+                "tags": [
+                    "Real Estate",
+                    "CRM",
+                    "Automation",
+                    "Digital Marketing"
+                ]
+            },
+            {
                 "when": "2011 — Present",
-                "title": "Software &amp; Systems Architect · Independent",
-                "text": "AI, enterprise and marketplace integration for multi-channel sellers, distributors and retailers across the Philippines. Systems architecture, automation and ERP connectivity.",
+                "title": "Enterprise Solutions Architect · AI &amp; Automation Consultant",
+                "text": "Independent consulting as Gio Asuncion Consulting &amp; Technology — AI, enterprise and marketplace integration for sellers, distributors and retailers across the Philippines. Systems architecture, business automation and ERP connectivity.",
                 "tags": [
                     "AI",
-                    "Laravel",
-                    "MySQL",
+                    "Automation",
+                    "ERP",
                     "REST APIs",
                     "AWS"
+                ]
+            },
+            {
+                "when": "2019 — 2022",
+                "title": "Founder &amp; Managing Director @ KLAC Consumer Goods Trading",
+                "text": "Founded and led a consumer-goods trading company serving public and private sector clients — government procurement and public bidding end to end, plus the digital systems that ran inventory, documentation, procurement and fulfilment.",
+                "tags": [
+                    "Government Procurement",
+                    "Public Bidding",
+                    "Trading",
+                    "Supply Chain",
+                    "Operations"
                 ]
             },
             {
