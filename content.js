@@ -1,5 +1,5 @@
 /* BINUO NG ADMIN — huwag i-edit nang manu-mano.
-   Huling update: 2026-08-02 09:20:00 */
+   Huling update: 2026-08-02 03:45:25 */
 window.SITE = {
     "theme": {
         "--bg": "#0E1012",
@@ -57,20 +57,8 @@ window.SITE = {
         "photo": "photo-20260727055545.jpg",
         "photoAlt": "Gio Asuncion",
         "photoLeft": "Pasig City, PH",
-        "photoRight": "Available"
+        "photoRight": "I Am +"
     },
-    "marquee": [
-        "Artificial Intelligence",
-        "Enterprise Software",
-        "ERP",
-        "CRM",
-        "E-Commerce",
-        "Marketplace Integration",
-        "Business Automation",
-        "Cloud",
-        "API Integration",
-        "Digital Transformation"
-    ],
     "expertise": {
         "label": "expertise",
         "heading": "Intelligent systems,<br>built to run a business.",
@@ -284,7 +272,7 @@ window.SITE = {
         "heading": "Thirty years<br>of systems.",
         "jobs": [
             {
-                "when": "2018 — Present",
+                "when": "2011 — Present",
                 "title": "Software &amp; Systems Architect · Independent",
                 "text": "AI, enterprise and marketplace integration for multi-channel sellers, distributors and retailers across the Philippines. Systems architecture, automation and ERP connectivity.",
                 "tags": [
@@ -414,5 +402,17 @@ window.SITE = {
     "footer": {
         "left": "© 2026 Gio Asuncion · Software Architect",
         "right": "Technology · Innovation · Leadership"
-    }
+    },
+    "marquee": [
+        "Artificial Intelligence",
+        "Enterprise Software",
+        "ERP",
+        "CRM",
+        "E-Commerce",
+        "Marketplace Integration",
+        "Business Automation",
+        "Cloud",
+        "API Integration",
+        "Digital Transformation"
+    ]
 };
