@@ -1,5 +1,5 @@
 /* BINUO NG ADMIN — huwag i-edit nang manu-mano.
-   Huling update: 2026-08-02 09:56:47 */
+   Huling update: 2026-08-02 10:01:39 */
 window.SITE = {
     "theme": {
         "--bg": "#0E1012",
@@ -122,6 +122,33 @@ window.SITE = {
             {
                 "title": "Cloud Solutions",
                 "text": "Cloud migration and infrastructure for reliability at scale."
+            }
+        ]
+    },
+    "framework": {
+        "label": "framework",
+        "heading": "How automation gets built.",
+        "lede": "A five-step method — from finding the opportunity to optimising it with AI.",
+        "steps": [
+            {
+                "title": "Assess",
+                "text": "Analyze business processes and identify automation opportunities."
+            },
+            {
+                "title": "Design",
+                "text": "Create scalable workflows and system architecture."
+            },
+            {
+                "title": "Develop",
+                "text": "Build secure, reliable and integrated automation solutions."
+            },
+            {
+                "title": "Integrate",
+                "text": "Connect systems, data and external services."
+            },
+            {
+                "title": "Optimize",
+                "text": "Continuously improve performance through analytics and AI."
             }
         ]
     },
