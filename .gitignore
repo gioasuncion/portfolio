@@ -1,0 +1,9 @@
+# Local-only admin editor (PHP) — never deploy to GitHub Pages
+admin/
+
+# Local setup notes
+BASAHIN-MUNA.txt
+
+# Source documents / working files
+*.docx
+*.tmp

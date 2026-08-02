@@ -1,5 +1,5 @@
 /* BINUO NG ADMIN — huwag i-edit nang manu-mano.
-   Huling update: 2026-07-27 05:56:01 */
+   Huling update: 2026-08-02 09:20:00 */
 window.SITE = {
     "theme": {
         "--bg": "#0E1012",
@@ -12,8 +12,8 @@ window.SITE = {
         "--sync": "#C9F24D"
     },
     "meta": {
-        "title": "Gio Asuncion — E-Commerce Systems Architect",
-        "description": "I connect Shopee, Lazada, TikTok Shop and your own site to the ERP, warehouse and accounting systems you already run."
+        "title": "Gio Asuncion — Software Architect · AI, Enterprise Systems & Digital Commerce",
+        "description": "I architect intelligent digital ecosystems — AI, enterprise software, e-commerce and automation — that transform how businesses run."
     },
     "brand": "gio.asuncion",
     "nav": [
@@ -22,16 +22,16 @@ window.SITE = {
             "href": "#expertise"
         },
         {
+            "label": "services",
+            "href": "#services"
+        },
+        {
             "label": "work",
             "href": "#work"
         },
         {
-            "label": "experience",
-            "href": "#experience"
-        },
-        {
-            "label": "trainings",
-            "href": "#trainings"
+            "label": "portfolio",
+            "href": "#portfolio"
         },
         {
             "label": "contact",
@@ -40,47 +40,124 @@ window.SITE = {
     ],
     "hero": {
         "name": "Gio Asuncion",
-        "role": "E-Commerce Systems Architect · ERP, Inventory &amp; Marketplace Integration",
-        "lede": "I connect Shopee, Lazada, TikTok Shop and your own site to the ERP, warehouse and accounting systems you already run — so your stock tells the truth everywhere at once. Thirty years of enterprise systems, pointed at marketplaces.",
+        "role": "Software Architect · AI, Enterprise Systems &amp; Digital Commerce",
+        "lede": "I design and build intelligent digital ecosystems — connecting AI, enterprise software, e-commerce and automation into systems that run a business end to end. Thirty years of enterprise engineering, now pointed at what AI makes possible.",
         "buttons": [
             {
-                "label": "Book an integration review",
-                "href": "#contact",
+                "label": "Explore my work",
+                "href": "#work",
                 "style": "solid"
             },
             {
-                "label": "See the work",
-                "href": "#work",
+                "label": "Book a consultation",
+                "href": "#contact",
                 "style": "ghost"
             }
         ],
         "photo": "photo-20260727055545.jpg",
         "photoAlt": "Gio Asuncion",
         "photoLeft": "Pasig City, PH",
-        "photoRight": "I Am +"
+        "photoRight": "Available"
     },
+    "marquee": [
+        "Artificial Intelligence",
+        "Enterprise Software",
+        "ERP",
+        "CRM",
+        "E-Commerce",
+        "Marketplace Integration",
+        "Business Automation",
+        "Cloud",
+        "API Integration",
+        "Digital Transformation"
+    ],
     "expertise": {
         "label": "expertise",
-        "heading": "Back-office plumbing,<br>not storefronts.",
-        "lede": "Agencies handle your ads and your listings. I handle what happens after the order comes in.",
+        "heading": "Intelligent systems,<br>built to run a business.",
+        "lede": "Five pillars I architect across — from AI and enterprise software to the automation that ties them together.",
         "items": [
             {
-                "title": "Inventory synchronisation",
-                "text": "One stock figure across every marketplace and your own site, with a single system holding the truth."
+                "title": "Artificial Intelligence",
+                "text": "AI consulting, chatbots, assistants, generative AI and prompt engineering — grounded in your own knowledge base and wired into real workflows."
             },
             {
-                "title": "Order &amp; fulfilment automation",
-                "text": "Orders reach your warehouse and accounting systems without anyone retyping them into a spreadsheet."
+                "title": "Enterprise Software",
+                "text": "ERP, CRM, HRIS, inventory, warehouse, finance and procurement systems, architected to work as one."
             },
             {
-                "title": "Marketplace API integration",
-                "text": "Shopee, Lazada, TikTok Shop, Meta Commerce, Shopify and WooCommerce, wired into the ERP you already run."
+                "title": "E-Commerce",
+                "text": "Shopee, Lazada, TikTok Shop and your own store connected to order management, fulfilment and payments."
+            },
+            {
+                "title": "Business Automation",
+                "text": "Sales, marketing, workflow and document automation that removes the manual steps between systems."
+            },
+            {
+                "title": "Digital Transformation",
+                "text": "Technology strategy, enterprise architecture, system integration and cloud migration for organisations modernising at scale."
             }
+        ]
+    },
+    "services": {
+        "label": "services",
+        "heading": "How I work with you.",
+        "lede": "Advisory and delivery — from a single architecture review to fractional CTO leadership.",
+        "items": [
+            {
+                "title": "Enterprise Consulting",
+                "text": "Systems strategy and architecture for organisations scaling their operations."
+            },
+            {
+                "title": "AI Consulting",
+                "text": "Where AI actually fits in your business, and how to deploy it safely and usefully."
+            },
+            {
+                "title": "Software Architecture",
+                "text": "System design, data models and integration blueprints before a line of code is written."
+            },
+            {
+                "title": "Fractional CTO",
+                "text": "Senior technology leadership on a part-time basis for teams not ready to hire full-time."
+            },
+            {
+                "title": "ERP &amp; Business Systems",
+                "text": "Selecting, designing and integrating the back-office systems your operation runs on."
+            },
+            {
+                "title": "E-Commerce Consulting",
+                "text": "Multi-channel commerce architecture — from marketplace APIs to fulfilment."
+            },
+            {
+                "title": "API Development &amp; Integration",
+                "text": "Connecting the systems you already run so data moves without re-typing."
+            },
+            {
+                "title": "Cloud Solutions",
+                "text": "Cloud migration and infrastructure for reliability at scale."
+            }
+        ]
+    },
+    "industries": {
+        "label": "industries",
+        "heading": "Industries I build for.",
+        "lede": "The patterns repeat across sectors — the systems adapt to each.",
+        "items": [
+            "Real Estate",
+            "Hospitality",
+            "Vacation Membership",
+            "Retail",
+            "Wholesale",
+            "Manufacturing",
+            "Logistics",
+            "Education",
+            "Healthcare",
+            "SMEs",
+            "Startups"
         ]
     },
     "work": {
         "label": "work",
-        "heading": "Integrations, with the numbers.",
+        "heading": "Proof, with the numbers.",
         "lede": "Client names withheld under NDA. Every figure below was measured after cutover.",
         "cases": [
             {
@@ -126,66 +203,80 @@ window.SITE = {
                     "Docker",
                     "AWS"
                 ]
-            },
-            {
-                "draft": true,
-                "meta": "",
-                "title": "Marketplace API integration across six platforms",
-                "caption": "",
-                "body": [
-                    "<em>Client type and scale, what was breaking, what it cost them, the core design decision, delivery, then at least three before/after numbers.</em>"
-                ],
-                "metrics": [
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    },
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    },
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    }
-                ],
-                "tags": []
-            },
-            {
-                "draft": true,
-                "meta": "",
-                "title": "POS and e-commerce on one stock ledger",
-                "caption": "",
-                "body": [
-                    "<em>Physical stores plus online marketplaces sharing real-time inventory. Strongest third story — it extends the first two into the offline side.</em>"
-                ],
-                "metrics": [
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    },
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    },
-                    {
-                        "k": "Metric",
-                        "before": "before",
-                        "after": "after"
-                    }
-                ],
-                "tags": []
             }
         ],
         "filters": [
             "Inventory sync 01",
             "Marketplace APIs 01",
-            "POS &amp; retail 01"
+            "ERP integration 01"
+        ]
+    },
+    "portfolio": {
+        "label": "portfolio",
+        "heading": "Systems I've architected.",
+        "lede": "A selection of enterprise platforms delivered across commerce, property and operations.",
+        "items": [
+            {
+                "kind": "ERP",
+                "title": "Enterprise Resource Planning System",
+                "text": "A modular ERP unifying inventory, accounting, procurement and reporting on one database — the operational backbone for a multi-warehouse business.",
+                "tags": [
+                    "Modules",
+                    "Database",
+                    "API",
+                    "Reporting"
+                ]
+            },
+            {
+                "kind": "Membership",
+                "title": "Vacation Membership Platform",
+                "text": "A complete digital membership ecosystem — reservations, member portal, billing and loyalty for a vacation-club operator.",
+                "tags": [
+                    "Reservations",
+                    "Member Portal",
+                    "Billing"
+                ]
+            },
+            {
+                "kind": "Real Estate",
+                "title": "Property Management Platform",
+                "text": "Listings, tenancy, billing and maintenance workflows for property operators, with an admin CMS behind it.",
+                "tags": [
+                    "Listings",
+                    "Billing",
+                    "CMS"
+                ]
+            },
+            {
+                "kind": "Logistics",
+                "title": "Warehouse Management System",
+                "text": "Receiving, put-away, picking and stock control integrated with the ERP and e-commerce order flow.",
+                "tags": [
+                    "Inventory",
+                    "Fulfilment",
+                    "Integration"
+                ]
+            },
+            {
+                "kind": "Commerce",
+                "title": "E-Commerce Management Platform",
+                "text": "Multi-channel order, inventory and fulfilment management across marketplaces and an own-brand store.",
+                "tags": [
+                    "Marketplaces",
+                    "Orders",
+                    "Payments"
+                ]
+            },
+            {
+                "kind": "AI",
+                "title": "AI Business Automation Platform",
+                "text": "An AI layer that drafts proposals, SOPs and reports, and automates repetitive back-office workflows.",
+                "tags": [
+                    "Generative AI",
+                    "Workflow",
+                    "Automation"
+                ]
+            }
         ]
     },
     "experience": {
@@ -194,9 +285,10 @@ window.SITE = {
         "jobs": [
             {
                 "when": "2018 — Present",
-                "title": "E-Commerce Systems Architect · Independent",
-                "text": "Marketplace and back-office integration for multi-channel sellers, distributors and retailers across the Philippines. Inventory synchronisation, order automation and ERP connectivity.",
+                "title": "Software &amp; Systems Architect · Independent",
+                "text": "AI, enterprise and marketplace integration for multi-channel sellers, distributors and retailers across the Philippines. Systems architecture, automation and ERP connectivity.",
                 "tags": [
+                    "AI",
                     "Laravel",
                     "MySQL",
                     "REST APIs",
@@ -206,8 +298,9 @@ window.SITE = {
             {
                 "when": "2014 — 2016",
                 "title": "Chief Operating Officer @ Team Global Inc.",
-                "text": "[One or two lines. What you built, who used it, how big it was.]",
+                "text": "Led operations and technology for a distribution business — the systems, the processes and the teams that ran them.",
                 "tags": [
+                    "Operations",
                     "PHP",
                     "MySQL"
                 ]
@@ -215,7 +308,7 @@ window.SITE = {
             {
                 "when": "2001 — 2010",
                 "title": "Computer Professor @ AMA Computer College — Lipa",
-                "text": "Taught computer science and IT subjects for nearly a decade. [Add the subjects you handled — programming, databases, systems analysis — and anything you led: curriculum, department, capstone supervision.",
+                "text": "Taught programming, databases and systems analysis for nearly a decade, and supervised capstone projects.",
                 "tags": [
                     "Programming",
                     "Databases",
@@ -242,67 +335,75 @@ window.SITE = {
         "cite": "Operations Manager — multi-channel retail"
     },
     "trainings": {
-        "label": "trainings",
-        "heading": "Corporate training<br>and workshops.",
-        "lede": "Ten years teaching computer science, now delivered to operations and development teams in-house.",
+        "label": "speaking",
+        "heading": "Speaking &amp; training.",
+        "lede": "Talks and workshops for teams modernising their operations — from AI adoption to systems architecture.",
         "items": [
             {
-                "format": "Half-day · in-house",
-                "title": "Why your stock never matches across channels",
-                "text": "For operations and e-commerce teams. How marketplace inventory updates actually work, where the counts drift, and what a team can fix without writing code. [Adjust to what you actually run.]",
+                "format": "Keynote / talk",
+                "title": "Architecting the future with AI",
+                "text": "How organisations put AI to work across operations — what's real, what's hype, and where to start.",
                 "tags": [
+                    "AI",
+                    "Strategy",
+                    "Leadership"
+                ]
+            },
+            {
+                "format": "Workshop · in-house",
+                "title": "AI adoption for operations teams",
+                "text": "A practical session on where AI fits day-to-day, and how to deploy it without disrupting what already works.",
+                "tags": [
+                    "AI",
                     "Operations",
-                    "Inventory",
-                    "Marketplaces"
+                    "Automation"
                 ]
             },
             {
                 "format": "2 days · in-house",
-                "title": "Marketplace API integration for in-house dev teams",
-                "text": "For developers taking integration work in-house. Authentication, webhooks and polling, rate limits, retry queues, and reconciliation design. [Adjust to what you actually run.]",
+                "title": "Enterprise &amp; marketplace integration for dev teams",
+                "text": "Authentication, webhooks, rate limits, retry queues and reconciliation design for teams taking integration in-house.",
                 "tags": [
                     "Developers",
                     "APIs",
                     "Architecture"
                 ]
-            },
-            {
-                "format": "[Format · duration]",
-                "title": "[Program name]",
-                "text": "[Who it's for, what they leave with, and how it's delivered.]",
-                "tags": []
             }
         ]
     },
     "contact": {
         "label": "contact",
-        "availability": "Available for select consulting engagements",
-        "heading": "Losing track of stock across channels?",
-        "lede": "Book a 30-minute review. Bring your channel list, roughly how many SKUs you carry, and what's breaking. You'll leave with a straight answer on whether integration is worth it for you — including if the answer is no.",
+        "availability": "Available for select consulting and architecture engagements",
+        "heading": "Let's architect what's next.",
+        "lede": "Book a 30-minute consultation. Tell me what you're building or what's breaking, and you'll leave with a straight answer on the right technical path — including if the answer is simpler than you think.",
         "buttons": [
             {
-                "label": "Email me",
-                "href": "mailto:hello@gioasuncion.com",
+                "label": "Book a consultation",
+                "href": "#",
                 "style": "solid"
             },
             {
-                "label": "Book a call",
-                "href": "#",
+                "label": "Email me",
+                "href": "mailto:hello@gioasuncion.com",
                 "style": "ghost"
             }
         ],
         "links": [
             {
-                "label": "hello@gioasuncion.com",
-                "href": "mailto:hello@gioasuncion.com"
+                "label": "Portfolio",
+                "href": "https://gioasuncion.github.io/portfolio"
+            },
+            {
+                "label": "GitHub",
+                "href": "https://github.com/gioasuncion/portfolio"
             },
             {
                 "label": "LinkedIn",
                 "href": "#"
             },
             {
-                "label": "GitHub",
-                "href": "#"
+                "label": "hello@gioasuncion.com",
+                "href": "mailto:hello@gioasuncion.com"
             },
             {
                 "label": "WhatsApp",
@@ -311,19 +412,7 @@ window.SITE = {
         ]
     },
     "footer": {
-        "left": "© 2026 Gio Asuncion",
-        "right": "Quezon City, Philippines"
-    },
-    "marquee": [
-        "Shopee",
-        "Lazada",
-        "TikTok Shop",
-        "Meta Commerce",
-        "Shopify",
-        "WooCommerce",
-        "ERP",
-        "Warehouse",
-        "Accounting",
-        "Inventory sync"
-    ]
+        "left": "© 2026 Gio Asuncion · Software Architect",
+        "right": "Technology · Innovation · Leadership"
+    }
 };
