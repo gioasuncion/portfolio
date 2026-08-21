@@ -445,6 +445,10 @@ window.SITE = {
                 "href": "https://wa.me/639305013452"
             },
             {
+                "label": "Telegram",
+                "href": "https://t.me/+639305013452"
+            },
+            {
                 "label": "Facebook",
                 "href": "https://www.facebook.com/gio.asuncion.888"
             },
