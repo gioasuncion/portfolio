@@ -230,8 +230,21 @@ window.SITE = {
     "portfolio": {
         "label": "portfolio",
         "heading": "Systems I've architected.",
-        "lede": "A selection of enterprise platforms delivered across commerce, property and operations.",
+        "lede": "A selection of platforms delivered across commerce, property and operations — alongside the software I build and ship myself.",
         "items": [
+            {
+                "kind": "Product",
+                "title": "Linya — Teleprompter for Creators",
+                "text": "My own shipped product: an offline Android teleprompter built for Filipino creators. The script follows your voice as you speak, floats over Facebook Live in an overlay, records straight from the camera, and rewrites itself with AI — all without a server.",
+                "tags": [
+                    "Android",
+                    "Offline-first",
+                    "Voice-paced",
+                    "AI Rewriter"
+                ],
+                "href": "https://linya.live",
+                "linkLabel": "linya.live"
+            },
             {
                 "kind": "ERP",
                 "title": "Enterprise Resource Planning System",
