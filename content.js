@@ -418,7 +418,7 @@ window.SITE = {
         "buttons": [
             {
                 "label": "Book a consultation",
-                "href": "https://wa.me/639305013452?text=Hi%20Gio%2C%20I%27d%20like%20to%20book%20a%2030-minute%20consultation.",
+                "href": "https://t.me/giomasuncion",
                 "style": "solid"
             },
             {
@@ -439,10 +439,6 @@ window.SITE = {
             {
                 "label": "LinkedIn",
                 "href": "https://www.linkedin.com/in/gio-asuncion-45415b218"
-            },
-            {
-                "label": "WhatsApp",
-                "href": "https://wa.me/639305013452"
             },
             {
                 "label": "Telegram",
