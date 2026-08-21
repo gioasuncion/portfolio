@@ -246,6 +246,19 @@ window.SITE = {
                 "linkLabel": "linya.live"
             },
             {
+                "kind": "Platform",
+                "title": "E-Commerce Fulfillment Platform",
+                "text": "A back-office control centre for online sellers — real-time inventory with audit history, order processing through to delivery, warehousing and cargo notices, returns and COD collection, and automated settlement breakdowns per channel across Shopee, Lazada, TikTok, Facebook and own-site sales.",
+                "tags": [
+                    "Inventory",
+                    "Settlements",
+                    "Returns",
+                    "OTP Auth"
+                ],
+                "href": "https://tinyurl.com/ecommfulfill",
+                "linkLabel": "See the platform"
+            },
+            {
                 "kind": "Marketplace",
                 "title": "SmartCart",
                 "text": "A multi-vendor marketplace — seller onboarding and shopfronts, categories, flash deals, a voucher engine, checkout, and a referral programme that pays commission on attributed orders. Eight shops trading on it, with a downloadable Android app for buyers and sellers.",
@@ -257,6 +270,19 @@ window.SITE = {
                 ],
                 "href": "https://smartcart.42web.io/",
                 "linkLabel": "Visit the marketplace"
+            },
+            {
+                "kind": "Real Estate",
+                "title": "88 MMRI Property Portal",
+                "text": "A brokered listings portal for the Philippine market — free-forever owner listings, search by property type, location and price band, an approval workflow before anything goes public, and admin-set commission that applies only when a sale closes.",
+                "tags": [
+                    "Listings",
+                    "Search",
+                    "Approvals",
+                    "Commission"
+                ],
+                "href": "https://tinyurl.com/88mmri",
+                "linkLabel": "Browse the portal"
             },
             {
                 "kind": "Storefront",
@@ -323,16 +349,6 @@ window.SITE = {
                     "Inventory",
                     "Fulfilment",
                     "Integration"
-                ]
-            },
-            {
-                "kind": "Commerce",
-                "title": "E-Commerce Management Platform",
-                "text": "Multi-channel order, inventory and fulfilment management across marketplaces and an own-brand store.",
-                "tags": [
-                    "Marketplaces",
-                    "Orders",
-                    "Payments"
                 ]
             },
             {
