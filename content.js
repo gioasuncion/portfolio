@@ -446,7 +446,7 @@ window.SITE = {
             },
             {
                 "label": "Telegram",
-                "href": "https://t.me/+639305013452"
+                "href": "https://t.me/giomasuncion"
             },
             {
                 "label": "Facebook",
