@@ -430,7 +430,7 @@ window.SITE = {
         "links": [
             {
                 "label": "Portfolio",
-                "href": "https://gioasuncion.github.io/portfolio"
+                "href": "https://gioasuncion.com"
             },
             {
                 "label": "GitHub",
