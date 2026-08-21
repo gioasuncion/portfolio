@@ -1,5 +1,5 @@
 /* BINUO NG ADMIN — huwag i-edit nang manu-mano.
-   Huling update: 2026-08-02 10:01:39 */
+   Huling update: 2026-08-21 15:54:15 */
 window.SITE = {
     "theme": {
         "--bg": "#0E1012",
@@ -303,6 +303,16 @@ window.SITE = {
                     "Reservations",
                     "Member Portal",
                     "Billing"
+                ],
+                "links": [
+                    {
+                        "href": "https://taalfarmville.site.je/?i=1",
+                        "label": "Visit the vacation club"
+                    },
+                    {
+                        "href": "https://farmvillecamping.fwh.is/",
+                        "label": "See the camping site"
+                    }
                 ]
             },
             {

@@ -163,6 +163,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 .pf h3 a:hover{color:var(--accent)}
 .pf .pfgo{font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none;margin-top:2px}
 .pf .pfgo:hover{text-decoration:underline}
+.pf .pfgos{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:2px}
+.pf .pfgos .pfgo{margin-top:0}
 @media(max-width:860px){.pf{grid-template-columns:1fr}}
 
 /* automation framework */
@@ -380,12 +382,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
         (has(pf.heading) ? '<h2>'+esc(pf.heading)+'</h2>' : '')+
         (has(pf.lede) ? '<p class="lede" style="margin-top:20px">'+esc(pf.lede)+'</p>' : '')+
         '<div class="pf">'+ list(pf.items).map(function(it, i){
-          var ttl = it.href
-            ? '<a href="'+esc(it.href)+'"'+ext(it.href)+'>'+esc(it.title)+'</a>'
+          /* isa o marami: href/linkLabel para sa iisang link, links[] kung marami */
+          var lx = list(it.links).filter(function(l){ return l && l.href; });
+          if(!lx.length && it.href) lx = [{href:it.href, label:it.linkLabel}];
+          var ttl = lx.length
+            ? '<a href="'+esc(lx[0].href)+'"'+ext(lx[0].href)+'>'+esc(it.title)+'</a>'
             : esc(it.title);
-          var go = it.href
-            ? '<a class="pfgo" href="'+esc(it.href)+'"'+ext(it.href)+'>'+esc(it.linkLabel || String(it.href).replace(/^https?:\/\//,''))+' ↗</a>'
-            : '';
+          var links = lx.map(function(l){
+            return '<a class="pfgo" href="'+esc(l.href)+'"'+ext(l.href)+'>'+
+                   esc(l.label || String(l.href).replace(/^https?:\/\//,''))+' ↗</a>';
+          }).join('');
+          var go = !links ? ''
+            : (lx.length > 1 ? '<div class="pfgos">'+links+'</div>' : links);
           return '<article><span class="n">'+('0'+(i+1)).slice(-2)+' / '+esc(it.kind || 'System')+'</span>'+
                  '<h3>'+ttl+'</h3><p>'+esc(it.text)+'</p>'+tags(it.tags)+go+'</article>';
         }).join('') +'</div>'+
