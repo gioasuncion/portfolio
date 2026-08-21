@@ -418,7 +418,7 @@ window.SITE = {
         "buttons": [
             {
                 "label": "Book a consultation",
-                "href": "https://t.me/giomasuncion",
+                "href": "https://m.me/gio.asuncion.888",
                 "style": "solid"
             },
             {
