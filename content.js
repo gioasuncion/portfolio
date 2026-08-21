@@ -268,7 +268,7 @@ window.SITE = {
                     "Affiliate",
                     "Android App"
                 ],
-                "href": "https://smartcart.42web.io/",
+                "href": "https://smartcartonline.store/",
                 "linkLabel": "Visit the marketplace"
             },
             {
@@ -283,32 +283,6 @@ window.SITE = {
                 ],
                 "href": "https://tinyurl.com/88mmri",
                 "linkLabel": "Browse the portal"
-            },
-            {
-                "kind": "Storefront",
-                "title": "Cherie's Chicken Pastil",
-                "text": "A single-product direct-to-consumer storefront — buyer, admin and affiliate roles, vouchers, OTP login and full checkout — running on a file-based database with no server to maintain. Built end to end and selling today.",
-                "tags": [
-                    "Storefront",
-                    "Affiliates",
-                    "Vouchers",
-                    "PWA"
-                ],
-                "href": "https://tinyurl.com/chickenpastil",
-                "linkLabel": "Visit the shop"
-            },
-            {
-                "kind": "Storefront",
-                "title": "Aling Bebe's Kitchen",
-                "text": "A two-product homemade condiment shop — bagoong alamang and chili garlic oil — stood up from the same storefront engine in a day. Proof the build is repeatable for any small food brand that needs to sell online.",
-                "tags": [
-                    "Storefront",
-                    "Multi-product",
-                    "Checkout",
-                    "Repeatable"
-                ],
-                "href": "https://tinyurl.com/harvymercado",
-                "linkLabel": "Visit the shop"
             },
             {
                 "kind": "ERP",
