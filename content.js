@@ -418,12 +418,12 @@ window.SITE = {
         "buttons": [
             {
                 "label": "Book a consultation",
-                "href": "#",
+                "href": "https://wa.me/639305013452?text=Hi%20Gio%2C%20I%27d%20like%20to%20book%20a%2030-minute%20consultation.",
                 "style": "solid"
             },
             {
                 "label": "Email me",
-                "href": "mailto:hello@gioasuncion.com",
+                "href": "mailto:gio05051978@gmail.com",
                 "style": "ghost"
             }
         ],
@@ -438,15 +438,15 @@ window.SITE = {
             },
             {
                 "label": "LinkedIn",
-                "href": "#"
+                "href": "https://www.linkedin.com/in/gio-asuncion-45415b218"
             },
             {
-                "label": "hello@gioasuncion.com",
-                "href": "mailto:hello@gioasuncion.com"
+                "label": "gio05051978@gmail.com",
+                "href": "mailto:gio05051978@gmail.com"
             },
             {
                 "label": "WhatsApp",
-                "href": "#"
+                "href": "https://wa.me/639305013452"
             }
         ]
     },
