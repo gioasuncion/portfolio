@@ -423,7 +423,7 @@ window.SITE = {
             },
             {
                 "label": "Email me",
-                "href": "mailto:gio05051978@gmail.com",
+                "href": "https://mail.google.com/mail/?view=cm&fs=1&to=gio05051978@gmail.com&su=Consultation%20inquiry%20from%20gioasuncion.com",
                 "style": "ghost"
             }
         ],
@@ -439,10 +439,6 @@ window.SITE = {
             {
                 "label": "LinkedIn",
                 "href": "https://www.linkedin.com/in/gio-asuncion-45415b218"
-            },
-            {
-                "label": "gio05051978@gmail.com",
-                "href": "mailto:gio05051978@gmail.com"
             },
             {
                 "label": "WhatsApp",

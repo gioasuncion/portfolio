@@ -208,9 +208,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   function has(v){ return v != null && String(v).trim() !== ''; }
   function list(a){ return Array.isArray(a) ? a : []; }
 
+  function ext(h){ return /^https?:/i.test(String(h)) ? ' target="_blank" rel="noopener"' : ''; }
   function btns(arr){
     return '<div class="btnrow">' + list(arr).map(function(b){
-      return '<a class="btn'+(b.style === 'ghost' ? ' ghost' : '')+'" href="'+esc(b.href)+'">'+esc(b.label)+'</a>';
+      return '<a class="btn'+(b.style === 'ghost' ? ' ghost' : '')+'" href="'+esc(b.href)+'"'+ext(b.href)+'>'+esc(b.label)+'</a>';
     }).join('') + '</div>';
   }
   function tags(arr){
@@ -435,7 +436,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
         '<div style="margin-top:30px">'+btns(c2.buttons)+'</div>'+
         (list(c2.links).length
           ? '<div class="socials">'+c2.links.map(function(l){
-              return '<a href="'+esc(l.href)+'">'+esc(l.label)+'</a>';
+              return '<a href="'+esc(l.href)+'"'+ext(l.href)+'>'+esc(l.label)+'</a>';
             }).join('')+'</div>'
           : '')+
       '</div></section>'
