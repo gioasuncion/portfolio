@@ -443,6 +443,22 @@ window.SITE = {
             {
                 "label": "WhatsApp",
                 "href": "https://wa.me/639305013452"
+            },
+            {
+                "label": "Facebook",
+                "href": "https://www.facebook.com/gio.asuncion.888"
+            },
+            {
+                "label": "Instagram",
+                "href": "https://www.instagram.com/sirgio888"
+            },
+            {
+                "label": "TikTok",
+                "href": "https://www.tiktok.com/@sirgio0505"
+            },
+            {
+                "label": "X",
+                "href": "https://x.com/asuncion_gio"
             }
         ]
     },
