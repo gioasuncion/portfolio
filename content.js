@@ -246,6 +246,19 @@ window.SITE = {
                 "linkLabel": "linya.live"
             },
             {
+                "kind": "Marketplace",
+                "title": "SmartCart",
+                "text": "A multi-vendor marketplace — seller onboarding and shopfronts, categories, flash deals, a voucher engine, checkout, and a referral programme that pays commission on attributed orders. Eight shops trading on it, with a downloadable Android app for buyers and sellers.",
+                "tags": [
+                    "Multi-vendor",
+                    "Vouchers",
+                    "Affiliate",
+                    "Android App"
+                ],
+                "href": "https://smartcart.42web.io/",
+                "linkLabel": "Visit the marketplace"
+            },
+            {
                 "kind": "Storefront",
                 "title": "Cherie's Chicken Pastil",
                 "text": "A single-product direct-to-consumer storefront — buyer, admin and affiliate roles, vouchers, OTP login and full checkout — running on a file-based database with no server to maintain. Built end to end and selling today.",
