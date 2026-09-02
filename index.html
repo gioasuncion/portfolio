@@ -68,12 +68,14 @@ section{padding:var(--gap) 0;border-top:1px solid var(--line)}
 a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* portrait */
-.portrait{position:relative;margin:0;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+/* Walang border dito: nasa .portrait-frame siya, na nasa HARAP ng litrato --
+   iyon ang nagpaparamdam na bintana ang kahon at hindi patag na larawan. */
+.portrait{position:relative;margin:0;background:var(--surface);overflow:hidden}
 .portrait img{width:100%;height:auto;filter:saturate(.9) contrast(1.04)}
 .portrait::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(14,16,18,0) 48%,rgba(14,16,18,.9) 100%)}
 .portrait figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;justify-content:space-between;gap:14px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:var(--muted)}
 .portrait figcaption b{color:var(--accent);font-weight:500}
-@media(max-width:920px){.portrait{max-width:420px}}
+@media(max-width:920px){.portrait-3d{max-width:420px}}
 
 /* portrait — scroll-driven frame sequence.
    Ang <img> ay laging nasa markup, kaya ang bisitang walang JS, walang frames,
@@ -87,17 +89,54 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offse
 .portrait::after{z-index:3}
 .portrait figcaption{z-index:4}
 
-/* --- 3D tilt -------------------------------------------------------------
-   Ang perspective ay nasa transform mismo, hindi sa magulang: walang wrapper
-   na kailangang idagdag sa markup, at ang figure ay nananatiling direktang
-   anak ng hero grid.
+/* --- 3D tilt: tunay na layer ng lalim ------------------------------------
+   Tatlong antas ang markup dahil kailangan:
 
-   Ang mga anghulo ay galing sa JS sa pamamagitan ng --tx/--ty. Nakasulat
-   silang walang unit at dinadagdagan ng deg dito, dahil hindi mapaparami ang
-   deg sa px -- at kailangan ng px ang parallax sa loob. */
-.portrait{transform:perspective(1100px) rotateX(calc(var(--tx,0) * 1deg)) rotateY(calc(var(--ty,0) * 1deg));
-  box-shadow:0 26px 64px -36px rgba(0,0,0,.95);
+     .portrait-3d     ang may perspective
+     .portrait-stage  ang tumatagilid, at may preserve-3d
+     ang mga anak     may sariling translateZ
+
+   Hindi maaaring nasa figure ang tilt. May overflow:hidden siya -- kailangan
+   iyon para matabas ang litrato sa loob ng kahon -- at ang overflow maliban
+   sa visible ay pinipilit ang transform-style na maging flat. Kaya ang mga
+   anak ng figure ay walang sariling lalim, kahit ilagyan ng translateZ.
+
+   Ang mga anghulo ay galing sa JS sa pamamagitan ng --tx/--ty. Walang unit
+   sila at dinadagdagan ng deg dito, dahil hindi mapaparami ang deg sa px --
+   at px ang kailangan ng parallax sa loob. */
+.portrait-3d{perspective:1200px;perspective-origin:50% 45%}
+.portrait-stage{position:relative;transform-style:preserve-3d;
+  transform:rotateX(calc(var(--tx,0) * 1deg)) rotateY(calc(var(--ty,0) * 1deg));
+  box-shadow:0 30px 70px -38px rgba(0,0,0,.95);
   transition:box-shadow .45s ease}
+
+/* Ang kapal. Nakaupo siya sa likod ng litrato at kaunting lumalabas sa
+   gilid, kaya pag tumagilid ay may nakikitang tabi -- iyon ang pagkakaiba ng
+   slab at ng patag na larawang naka-skew. */
+.portrait-edge{position:absolute;inset:0;transform:translateZ(-18px);
+  background:#08090b;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(0,0,0,.9), 0 18px 40px -22px rgba(0,0,0,.9)}
+
+/* Ang frame, nasa harap. Ito ang dating border ng figure. */
+.portrait-frame{position:absolute;inset:0;transform:translateZ(18px);
+  pointer-events:none;border:1px solid var(--line);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035)}
+
+/* --- Perspective grid sa likod -------------------------------------------
+   Lumalabas siya sa gilid ng litrato (inset na negatibo), kaya pag tumagilid
+   ay may nakikitang sahig sa likod. Ang grid ang pinakamalakas na senyas ng
+   lalim sa mata -- mas malakas pa kaysa sa tilt mismo, dahil may nakikitang
+   linyang nagtatagpo.
+
+   Naka-mask papuntang transparent sa gilid, kung hindi ay parang naka-tape
+   na papel ang dulo ng grid. */
+.portrait-grid{position:absolute;inset:-16%;transform:translateZ(-52px);
+  pointer-events:none;opacity:.75;
+  background-image:
+    repeating-linear-gradient(0deg,  rgba(201,242,77,.17) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(201,242,77,.17) 0 1px, transparent 1px 34px);
+  -webkit-mask-image:radial-gradient(68% 68% at 50% 45%, #000 26%, transparent 76%);
+          mask-image:radial-gradient(68% 68% at 50% 45%, #000 26%, transparent 76%)}
 /* Ang larawan ay gumagalaw pasalungat sa tilt -- iyon ang nagbibigay ng
    lalim. Naka-scale ng 1.06 para hindi sumipot ang gilid kapag umusog. */
 .portrait canvas.seq, .portrait img{
@@ -296,14 +335,29 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   // Ang canvas at ang preload bar ay laging nailalabas, pero patay sila hangga't
   // hindi nakakahanap ng frames ang engine sa ibaba. Kaya ang markup ay pareho
   // ang itsura sa bisitang walang JS at sa ngayon na wala pang frames.
+  // Tatlong antas: ang .portrait-3d ang may perspective, ang .portrait-stage
+  // ang tumatagilid at may preserve-3d, at ang mga anak niya ang may sariling
+  // Z. Hindi maaaring nasa figure ang tilt: may overflow:hidden siya, at ang
+  // overflow maliban sa visible ay pinipilit ang transform-style na maging
+  // flat -- kaya ang mga anak ay hindi magkakaroon ng lalim.
+  //
+  // Ang grid ay nasa likod, ang gilid (kapal) ay nasa likod din, at ang frame
+  // ay nasa harap -- kaya pag tumagilid, dumadaan ang gilid ng frame sa
+  // ibabaw ng litrato, gaya ng tunay na bintana.
   var photo = has(h.photo)
-    ? '<figure class="portrait">'+
+    ? '<div class="portrait-3d">'+
+      '<div class="portrait-stage">'+
+      '<div class="portrait-grid" aria-hidden="true"></div>'+
+      '<div class="portrait-edge" aria-hidden="true"></div>'+
+      '<figure class="portrait">'+
       '<canvas class="seq" aria-hidden="true"></canvas>'+
       '<span class="seq-bar" aria-hidden="true"></span>'+
       '<img src="'+esc(h.photo)+'" alt="'+esc(h.photoAlt || h.name)+'">'+
       ((has(h.photoLeft) || has(h.photoRight))
         ? '<figcaption><span>'+esc(h.photoLeft)+'</span><b>'+esc(h.photoRight)+'</b></figcaption>' : '')+
-      '</figure>'
+      '</figure>'+
+      '<div class="portrait-frame" aria-hidden="true"></div>'+
+      '</div></div>'
     : '';
 
   var marquee = list(S.marquee).length
@@ -563,6 +617,17 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   var cv = fig.querySelector('canvas.seq');
   var bar = fig.querySelector('.seq-bar');
 
+  // Dalawang magkaibang tungkulin, kaya dalawang elemento:
+  //   fig  -- ang figure. Dito ang is-seq/is-live at ang --seq-ar, at ang
+  //           rect niya ang sinusukat ng sequence.
+  //   host -- ang .portrait-3d. Dito isinusulat ang tilt vars, dahil
+  //           namamana sila pababa sa stage, grid, edge at frame; at dito
+  //           din ang pointer, para pumasok na sa loob ang grid na lumalabas
+  //           sa gilid.
+  // Kapag walang .portrait-3d (lumang markup), bumabagsak sa figure -- hindi
+  // sasabog, kulang lang ang lalim.
+  var host = document.querySelector('.portrait-3d') || fig;
+
   // Ang bisitang humihingi ng tahimik na interface ay hindi natin bibigyan ng
   // animation na hinihila ng scroll -- iyon ang klaseng galaw na pinapatay ng
   // setting na ito. Nananatili ang litrato, walang tilt, at hindi tayo
@@ -619,7 +684,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
     new IntersectionObserver(function(en){
       visible = en[0].isIntersecting;
       if (visible) schedule();
-    }, { rootMargin: '120px' }).observe(fig);
+    }, { rootMargin: '120px' }).observe(host);
   }
 
   /* ====================================================================
@@ -640,7 +705,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
     var hover = false, top = 0, hgt = 1;
 
     function tiltMeasure(){
-      var r = fig.getBoundingClientRect();
+      var r = host.getBoundingClientRect();
       top = r.top + window.pageYOffset;
       hgt = r.height || 1;
     }
@@ -656,8 +721,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
     }
 
     if (window.PointerEvent) {
-      fig.addEventListener('pointermove', function(e){
-        var r = fig.getBoundingClientRect();
+      host.addEventListener('pointermove', function(e){
+        var r = host.getBoundingClientRect();
         if (!r.width || !r.height) return;
         var nx = (e.clientX - r.left) / r.width  - 0.5;   // -0.5 .. 0.5
         var ny = (e.clientY - r.top)  / r.height - 0.5;
@@ -668,7 +733,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
         GY = 26 + ny * 60;
         schedule();
       }, { passive: true });
-      fig.addEventListener('pointerleave', function(){
+      host.addEventListener('pointerleave', function(){
         hover = false;
         schedule();
       }, { passive: true });
@@ -680,7 +745,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
       // tatalon ang card sa sandaling umalis ang cursor.
       tx += (TX - tx) * 0.12;  ty += (TY - ty) * 0.12;
       gx += (GX - gx) * 0.12;  gy += (GY - gy) * 0.12;
-      var s = fig.style;
+      var s = host.style;
       s.setProperty('--tx', tx.toFixed(2));
       s.setProperty('--ty', ty.toFixed(2));
       s.setProperty('--px', (-ty * 1.1).toFixed(2));
