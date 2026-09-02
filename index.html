@@ -75,6 +75,49 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offse
 .portrait figcaption b{color:var(--accent);font-weight:500}
 @media(max-width:920px){.portrait{max-width:420px}}
 
+/* portrait — scroll-driven frame sequence.
+   Ang <img> ay laging nasa markup, kaya ang bisitang walang JS, walang frames,
+   o naka-reduced-motion ay nakakakita pa rin ng litrato. Nakatago ang canvas
+   hangga't hindi handa ang unang mga frame; ang .is-live lang ang nagpapalit
+   sa kanila. Walang paraang maging blangko ang hero. */
+.portrait canvas.seq{position:absolute;inset:0;width:100%;height:100%;display:block;
+  opacity:0;transition:opacity .5s ease;z-index:0}
+.portrait img{position:relative;z-index:1;transition:opacity .5s ease}
+.portrait::before{z-index:2}
+.portrait::after{z-index:3}
+.portrait figcaption{z-index:4}
+
+/* --- 3D tilt -------------------------------------------------------------
+   Ang perspective ay nasa transform mismo, hindi sa magulang: walang wrapper
+   na kailangang idagdag sa markup, at ang figure ay nananatiling direktang
+   anak ng hero grid.
+
+   Ang mga anghulo ay galing sa JS sa pamamagitan ng --tx/--ty. Nakasulat
+   silang walang unit at dinadagdagan ng deg dito, dahil hindi mapaparami ang
+   deg sa px -- at kailangan ng px ang parallax sa loob. */
+.portrait{transform:perspective(1100px) rotateX(calc(var(--tx,0) * 1deg)) rotateY(calc(var(--ty,0) * 1deg));
+  box-shadow:0 26px 64px -36px rgba(0,0,0,.95);
+  transition:box-shadow .45s ease}
+/* Ang larawan ay gumagalaw pasalungat sa tilt -- iyon ang nagbibigay ng
+   lalim. Naka-scale ng 1.06 para hindi sumipot ang gilid kapag umusog. */
+.portrait canvas.seq, .portrait img{
+  transform:translate3d(calc(var(--px,0) * 1px), calc(var(--py,0) * 1px), 0) scale(1.06)}
+/* Sinag na sumusunod sa tilt. Nasa ::before, na dati ay walang gamit. */
+.portrait::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(420px circle at calc(var(--gx,50) * 1%) calc(var(--gy,26) * 1%),
+    rgba(201,242,77,.13), transparent 62%)}
+.portrait.is-live canvas.seq{opacity:1}
+.portrait.is-live img{opacity:0}
+/* Habang nagpre-load: manipis na sinulid, hindi spinner. Sapat na senyas
+   ang isang gumagalaw na linya at hindi humahatak ng mata palayo sa litrato. */
+.portrait .seq-bar{position:absolute;left:0;top:0;height:2px;z-index:4;width:0;
+  background:var(--accent);opacity:.85;transition:width .25s ease,opacity .5s ease}
+.portrait.is-live .seq-bar{opacity:0}
+/* Hawak ang taas habang nagpapalit ng frame. Kung wala ito, tatalon ang
+   buong hero grid sa sandaling maging absolute ang <img>. */
+.portrait.is-seq{aspect-ratio:var(--seq-ar,768/634)}
+.portrait.is-seq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
 /* marquee */
 .marquee{margin-top:clamp(56px,7vw,88px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:16px 0}
 .marquee ul{display:flex;margin:0;padding:0;list-style:none;width:max-content;animation:slide 38s linear infinite}
@@ -250,8 +293,14 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
 
   /* ---------- hero ---------- */
   var h = S.hero || {};
+  // Ang canvas at ang preload bar ay laging nailalabas, pero patay sila hangga't
+  // hindi nakakahanap ng frames ang engine sa ibaba. Kaya ang markup ay pareho
+  // ang itsura sa bisitang walang JS at sa ngayon na wala pang frames.
   var photo = has(h.photo)
-    ? '<figure class="portrait"><img src="'+esc(h.photo)+'" alt="'+esc(h.photoAlt || h.name)+'">'+
+    ? '<figure class="portrait">'+
+      '<canvas class="seq" aria-hidden="true"></canvas>'+
+      '<span class="seq-bar" aria-hidden="true"></span>'+
+      '<img src="'+esc(h.photo)+'" alt="'+esc(h.photoAlt || h.name)+'">'+
       ((has(h.photoLeft) || has(h.photoRight))
         ? '<figcaption><span>'+esc(h.photoLeft)+'</span><b>'+esc(h.photoRight)+'</b></figcaption>' : '')+
       '</figure>'
@@ -467,6 +516,362 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
   }
 
   app.innerHTML = out.join('');
+})();
+</script>
+
+<script>
+/* ============================================================
+   PORTRAIT SEQUENCE — scroll-driven frame animation.
+
+   Ang lalim ay galing sa mga naka-render nang frame, hindi sa CSS 3D: isang
+   sunod-sunod na larawan na ginuguhit sa <canvas>, at ang scroll position ang
+   pumipili kung aling frame. Ito ang teknik ng mga product page ng Apple, at
+   ito rin ang nasa reference video.
+
+   PAANO ITO BUHAYIN — dalawang bagay lang:
+     1. Gumawa ng folder na `frames/` sa tabi ng index.html.
+     2. Ilagay doon ang sunod-sunod na larawan, naka-numero mula 1:
+            frames/hero-0001.jpg, hero-0002.jpg, ... hero-0120.jpg
+
+   Walang bilang na kailangang i-edit: hinahanap mismo ng engine kung ilan ang
+   frame mo. Doble-doble muna ang hula (1, 2, 4, 8...) hanggang mapalo sa wala,
+   saka hinahati ang pagitan -- mga labing-apat na request para sa isang daang
+   frame, hindi isang daan.
+
+   Hangga't wala ang frames, tumitigil ang engine at ang static na litrato ang
+   nananatili -- hindi nasisira ang site. Sinusubok muna nito ang unang frame
+   bago mag-preload ng kahit ano.
+   ============================================================ */
+(function(){
+  'use strict';
+
+  var SEQ = {
+    dir:   'frames/',
+    base:  'hero-',
+    ext:   '.jpg',
+    pad:   4,        // hero-0001.jpg
+    count: 0,        // 0 = hanapin mismo; itakda lang kung ayaw ng pagtuklas
+    max:   600,      // hangganan ng paghahanap, para hindi walang katapusan
+    // Gaano karaming scroll ang kumakain sa buong sequence, bilang bahagi ng
+    // taas ng viewport. 1.4 = tapos na ang huling frame bago pa tuluyang
+    // umalis ang hero sa screen.
+    span:  1.4
+  };
+
+  var fig = document.querySelector('.portrait');
+  if (!fig) return;
+  var cv = fig.querySelector('canvas.seq');
+  var bar = fig.querySelector('.seq-bar');
+
+  // Ang bisitang humihingi ng tahimik na interface ay hindi natin bibigyan ng
+  // animation na hinihila ng scroll -- iyon ang klaseng galaw na pinapatay ng
+  // setting na ito. Nananatili ang litrato, walang tilt, at hindi tayo
+  // nagdo-download ng isang daang larawan para sa wala.
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (calm) return;
+
+  /* ====================================================================
+     ISANG SCHEDULER PARA SA DALAWA
+
+     Dalawang bagay ang gumagalaw sa portrait: ang tilt (laging nandiyan) at
+     ang frame sequence (kapag may frames). Iisang rAF ang naghahatid sa
+     dalawa -- dalawang magkahiwalay na loop ay dalawang beses na trabaho
+     kada scroll para sa isang elemento.
+
+     Ang `pending` ang sumasagot sa "may naka-schedule na ba", at ang `raf` ay
+     hawak lang para makansela. Hindi pinagsama: hindi tumatakbo ang rAF sa
+     nakatagong tab, at kung ang handle mismo ang bantay, maiiwan siyang
+     nakataas nang tuluyan -- mag-scroll, magpalit ng tab, bumalik, at patay
+     na ang lahat dahil hindi na makakapag-schedule muli.
+     ================================================================= */
+  var raf = 0, pending = false, visible = true;
+  var tasks = [];      // tumatakbo kada rAF
+  var measures = [];   // tumatakbo kapag nagbago ang sukat ng viewport
+
+  function schedule(){
+    if (pending) return;
+    pending = true;
+    raf = requestAnimationFrame(function(){ pending = false; raf = 0; runTasks(); });
+  }
+  function runTasks(){
+    if (!visible) return;
+    for (var i = 0; i < tasks.length; i++) tasks[i]();
+  }
+  function remeasure(){
+    for (var i = 0; i < measures.length; i++) measures[i]();
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', function(){ remeasure(); runTasks(); });
+
+  document.addEventListener('visibilitychange', function(){
+    // Linisin sa dalawang direksyon. Ang naka-schedule na rAF bago magtago ay
+    // hindi na kailanman tatakbo, kaya basura na ang handle at mali na ang
+    // `pending`.
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0; pending = false;
+    if (!document.hidden) schedule();
+  });
+
+  // Kapag wala na sa screen ang hero, tumitigil ang lahat. Walang saysay ang
+  // mag-render ng bagay na walang nakakakita.
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function(en){
+      visible = en[0].isIntersecting;
+      if (visible) schedule();
+    }, { rootMargin: '120px' }).observe(fig);
+  }
+
+  /* ====================================================================
+     3D TILT — ito ang gumagalaw kahit walang frames.
+
+     Ang buong card ang tumatagilid sa 3D, at ang larawan sa loob ay umuusog
+     nang pasalungat. Iyon ang nagbibigay ng lalim: kung parehong direksyon
+     sila, flat na larawang nakatagilid lang ang makikita.
+
+     Hindi translateZ ang ginamit sa loob dahil may `overflow:hidden` ang
+     figure, at ang overflow maliban sa visible ay pinipilit ang
+     transform-style na maging flat -- kaya hindi maaaring magkaroon ng
+     sariling Z ang mga anak. 2D na usog ang katumbas at pareho ang dating.
+     ================================================================= */
+  (function initTilt(){
+    var tx = 0, ty = 0, gx = 50, gy = 26;          // kasalukuyan
+    var TX = 0, TY = 0, GX = 50, GY = 26;          // hinahabol
+    var hover = false, top = 0, hgt = 1;
+
+    function tiltMeasure(){
+      var r = fig.getBoundingClientRect();
+      top = r.top + window.pageYOffset;
+      hgt = r.height || 1;
+    }
+
+    // Habang gumugulong: sumasandal paatras ang itaas pagpasok, pasulong
+    // paglabas. Isang mabagal na pagtango sa buong pagdaan ng hero.
+    function scrollTilt(){
+      var vh = window.innerHeight || 1;
+      var rel = top - window.pageYOffset;
+      var p = 1 - (rel + hgt) / (vh + hgt);
+      p = p < 0 ? 0 : (p > 1 ? 1 : p);
+      return (0.5 - p) * 10;
+    }
+
+    if (window.PointerEvent) {
+      fig.addEventListener('pointermove', function(e){
+        var r = fig.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        var nx = (e.clientX - r.left) / r.width  - 0.5;   // -0.5 .. 0.5
+        var ny = (e.clientY - r.top)  / r.height - 0.5;
+        hover = true;
+        TY = nx * 14;
+        TX = -ny * 10;      // baliktad: pababa ang cursor, sumasandal paatras
+        GX = 50 + nx * 90;
+        GY = 26 + ny * 60;
+        schedule();
+      }, { passive: true });
+      fig.addEventListener('pointerleave', function(){
+        hover = false;
+        schedule();
+      }, { passive: true });
+    }
+
+    function tiltFrame(){
+      if (!hover) { TX = scrollTilt(); TY = 0; GX = 50; GY = 26; }
+      // Hinahabol, hindi itinatakda: kung deretsong isasalin ang target ay
+      // tatalon ang card sa sandaling umalis ang cursor.
+      tx += (TX - tx) * 0.12;  ty += (TY - ty) * 0.12;
+      gx += (GX - gx) * 0.12;  gy += (GY - gy) * 0.12;
+      var s = fig.style;
+      s.setProperty('--tx', tx.toFixed(2));
+      s.setProperty('--ty', ty.toFixed(2));
+      s.setProperty('--px', (-ty * 1.1).toFixed(2));
+      s.setProperty('--py', ( tx * 1.1).toFixed(2));
+      s.setProperty('--gx', gx.toFixed(1));
+      s.setProperty('--gy', gy.toFixed(1));
+      // Magpatuloy hangga't hindi pa lumapag. Tumitigil kapag lumapag na --
+      // walang rAF na tumatakbo nang walang ginagawa.
+      if (Math.abs(TX - tx) > 0.02 || Math.abs(TY - ty) > 0.02) schedule();
+    }
+
+    measures.push(tiltMeasure);
+    tasks.push(tiltFrame);
+    tiltMeasure();
+    tiltFrame();
+  })();
+
+  // Ang frame sequence ay nangangailangan ng canvas; ang tilt ay hindi.
+  if (!cv) return;
+
+  // Sa mahinang koneksyon o naka-Data Saver, isa sa bawat dalawang frame lang
+  // ang kinukuha. Mas magaspang ang galaw pero kalahati ang bigat -- mas mabuti
+  // iyon kaysa sa hero na hindi kailanman natatapos mag-load sa mobile data.
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var thin = !!(conn && (conn.saveData || /^([23]g|slow-2g)$/.test(conn.effectiveType || '')));
+  var stride = (thin || window.innerWidth < 700) ? 2 : 1;
+
+  function url(n){
+    var s = String(n);
+    while (s.length < SEQ.pad) s = '0' + s;
+    return SEQ.dir + SEQ.base + s + SEQ.ext;
+  }
+
+  /* --- Meron ba talagang frames? ---------------------------------------
+     Isang larawan lang ang sinusubok. Kapag 404, tumahimik tayo: walang
+     malakas na error sa console ng bisita, walang nabagong itsura. */
+  var probe = new Image();
+  probe.onerror = function(){ /* wala pang frames -- static na litrato ang mananatili */ };
+  probe.onload  = function(){
+    if (SEQ.count > 0) { start(probe, SEQ.count); return; }
+    countFrames(function(n){ start(probe, n); });
+  };
+  probe.src = url(1);
+
+  /** Meron ba ang frame n? */
+  function exists(n, cb){
+    var im = new Image();
+    im.onload  = function(){ cb(true); };
+    im.onerror = function(){ cb(false); };
+    im.src = url(n);
+  }
+
+  /* Hinahanap ang huling frame na meron. Alam nating meron ang 1, kaya
+     doble-doble ang hula hanggang mapalo sa wala, saka binary search sa
+     pagitan ng huling meron at unang wala. */
+  function countFrames(done){
+    var lo = 1, hi = 0, p = 2;
+
+    function up(){
+      if (p > SEQ.max) { hi = SEQ.max + 1; bin(); return; }
+      exists(p, function(ok){
+        if (ok) { lo = p; p *= 2; up(); }
+        else    { hi = p; bin(); }
+      });
+    }
+    function bin(){
+      if (hi - lo <= 1) { done(lo); return; }
+      var mid = (lo + hi) >> 1;
+      exists(mid, function(ok){
+        if (ok) lo = mid; else hi = mid;
+        bin();
+      });
+    }
+    up();
+  }
+
+  function start(first, count){
+    // Ang tunay na proporsyon ng frame ang nagtatakda ng taas ng kahon, hindi
+    // ang hula. Kung mas mataas ang frames kaysa sa litrato, susunod ang kahon
+    // at hindi mapipilipit ang larawan.
+    if (first.naturalWidth && first.naturalHeight) {
+      fig.style.setProperty('--seq-ar', first.naturalWidth + '/' + first.naturalHeight);
+    }
+    fig.classList.add('is-seq');
+
+    var idx = [];
+    for (var n = 1; n <= count; n += stride) idx.push(n);
+    // Isang frame lang na naka-stride ay walang animation -- bumalik sa lahat.
+    if (idx.length < 2 && count > 1) { idx = []; for (n = 1; n <= count; n++) idx.push(n); }
+    var imgs = new Array(idx.length);
+    imgs[0] = first;
+
+    var ctx = cv.getContext('2d', { alpha: false });
+    var loaded = 1, live = false, cur = -1, raf = 0, pending = false, visible = true;
+
+    /* --- Sukat ng canvas ------------------------------------------------
+       Sinusukat sa device pixels para hindi malabo sa retina, at may hangganang
+       2 para hindi tayo gumuhit ng 4x na pixel sa telepono nang walang
+       nadadagdag na nakikita. */
+    function resize(){
+      var r = cv.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var w = Math.round(r.width * dpr), hh = Math.round(r.height * dpr);
+      if (cv.width !== w || cv.height !== hh) { cv.width = w; cv.height = hh; cur = -1; }
+    }
+
+    /* --- Isang frame, naka-cover fit ------------------------------------
+       Hindi 'stretch': pinapanatili ang proporsyon at tinatabas ang labis,
+       gaya ng object-fit:cover. Ang pagpilipit sa mukha ay mas masahol pa sa
+       pagkawala ng gilid. */
+    function draw(i){
+      var im = imgs[i];
+      if (!im || !im.complete || !im.naturalWidth) return false;
+      var cw = cv.width, ch = cv.height;
+      var s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+      var dw = im.naturalWidth * s, dh = im.naturalHeight * s;
+      ctx.drawImage(im, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+      cur = i;
+      return true;
+    }
+
+    /* --- Scroll -> frame -----------------------------------------------
+       Frame 0 sa itaas ng pahina, huling frame kapag naiakyat na ang hero.
+       Sinusukat sa document coordinates, hindi sa getBoundingClientRect kada
+       scroll -- iisang read lang kada resize kaysa kada frame. */
+    var endY = 1;
+    function measure(){
+      resize();
+      var r = fig.getBoundingClientRect();
+      var top = r.top + window.pageYOffset;
+      endY = Math.max(1, top + r.height + window.innerHeight * (SEQ.span - 1));
+    }
+
+    function pick(){
+      var p = Math.min(1, Math.max(0, window.pageYOffset / endY));
+      // Hindi lumalampas sa naipasok pa lang na frame: sa unang mga segundo,
+      // mabilis pang mag-scroll ang tao kaysa sa download.
+      var last = Math.max(0, loaded - 1);
+      return Math.min(last, Math.round(p * (idx.length - 1)));
+    }
+
+    // Hindi na siya nagtatanong ng `visible`: ang runTasks ang bantay niyon
+    // para sa lahat ng task.
+    function frame(){
+      var i = pick();
+      if (i !== cur) draw(i);
+    }
+
+    /* --- Preload --------------------------------------------------------
+       Anim na sabay, sunod-sunod mula sa umpisa. Hindi lahat-sabay: isang
+       daang parallel na request ay pinipigilan ng browser at pinapabagal ang
+       lahat, kasama ang unang frame na kailangan agad. */
+    var next = 1, inflight = 0;
+    function pump(){
+      while (inflight < 6 && next < idx.length) {
+        (function(k){
+          inflight++;
+          var im = new Image();
+          im.onload = im.onerror = function(){
+            inflight--;
+            // Ang bilang ng frame na kayang iguhit ay ang haba ng tuloy-tuloy
+            // na naunang bahagi -- kaya hindi tumatalon ang animation sa butas.
+            if (im.naturalWidth) imgs[k] = im;
+            while (loaded < idx.length && imgs[loaded] && imgs[loaded].naturalWidth) loaded++;
+            if (!live && loaded >= Math.min(10, idx.length)) {
+              live = true;
+              fig.classList.add('is-live');
+              measure();
+              draw(pick());
+            }
+            if (bar) bar.style.width = Math.round(loaded / idx.length * 100) + '%';
+            pump();
+          };
+          im.src = url(idx[k]);
+        })(next++);
+      }
+    }
+
+    // Ipakita agad ang unang frame kahit isa lang ang meron, para hindi
+    // maghintay ang mata sa buong sequence bago may mangyari.
+    measure();
+    if (idx.length === 1) { live = true; fig.classList.add('is-live'); draw(0); }
+    pump();
+
+    // Sumasakay na lang siya sa scheduler na naka-bukas na sa itaas -- walang
+    // sariling scroll listener, walang sariling rAF, walang pangalawang
+    // IntersectionObserver sa parehong elemento.
+    measures.push(measure);
+    tasks.push(frame);
+  }
 })();
 </script>
 </body>

@@ -289,8 +289,16 @@ window.SITE = {
                     "Approvals",
                     "Commission"
                 ],
-                "href": "https://88mars.online",
-                "linkLabel": "Browse the portal"
+                "links": [
+                    {
+                        "href": "https://88mars.online",
+                        "label": "Browse the portal"
+                    },
+                    {
+                        "href": "https://tinyurl.com/88mmrisystem",
+                        "label": "Open the system"
+                    }
+                ]
             },
             {
                 "kind": "ERP",
