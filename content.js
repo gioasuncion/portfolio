@@ -255,7 +255,7 @@ window.SITE = {
                     "Returns",
                     "OTP Auth"
                 ],
-                "href": "https://tinyurl.com/ecommfulfill",
+                "href": "https://smartcartfulfillment.online",
                 "linkLabel": "See the platform"
             },
             {
@@ -268,8 +268,16 @@ window.SITE = {
                     "Affiliate",
                     "Android App"
                 ],
-                "href": "https://smartcartonline.store/",
-                "linkLabel": "Visit the marketplace"
+                "links": [
+                    {
+                        "href": "https://smartcartonline.store/",
+                        "label": "Visit the marketplace"
+                    },
+                    {
+                        "href": "https://88mart.store",
+                        "label": "Visit 88Mart"
+                    }
+                ]
             },
             {
                 "kind": "Real Estate",
@@ -281,7 +289,7 @@ window.SITE = {
                     "Approvals",
                     "Commission"
                 ],
-                "href": "https://tinyurl.com/88mmri",
+                "href": "https://88mars.online",
                 "linkLabel": "Browse the portal"
             },
             {
@@ -323,7 +331,9 @@ window.SITE = {
                     "Listings",
                     "Billing",
                     "CMS"
-                ]
+                ],
+                "href": "https://88properties.online",
+                "linkLabel": "Open the platform"
             },
             {
                 "kind": "Logistics",
