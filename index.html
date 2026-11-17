@@ -201,6 +201,9 @@ a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offse
 .job h4{margin-bottom:10px}
 .job p{color:var(--muted);font-size:16px;margin:0}
 .job .tags{margin-top:16px}
+.job .jobgos{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px}
+.job .jobgos a{font-family:var(--mono);font-size:12px;color:var(--accent);text-decoration:none}
+.job .jobgos a:hover{text-decoration:underline}
 @media(max-width:760px){.job{grid-template-columns:1fr;gap:6px}}
 
 /* quote */
@@ -513,7 +516,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
         (has(x.heading) ? '<h2>'+esc(x.heading)+'</h2>' : '')+
         '<div class="exp">'+ list(x.jobs).map(function(j){
           return '<article class="job"><span class="when">'+esc(j.when)+'</span>'+
-                 '<div><h4>'+esc(j.title)+'</h4><p>'+esc(j.text)+'</p>'+tags(j.tags)+'</div></article>';
+                 '<div><h4>'+esc(j.title)+'</h4><p>'+esc(j.text)+'</p>'+tags(j.tags)+
+                 (function(){
+                   var jl = list(j.links).filter(function(l){ return l && l.href; });
+                   return jl.length ? '<div class="jobgos">'+jl.map(function(l){
+                     return '<a href="'+esc(l.href)+'"'+ext(l.href)+'>'+
+                            esc(l.label || String(l.href).replace(/^https?:\/\//,''))+' ↗</a>';
+                   }).join('')+'</div>' : '';
+                 })()+
+                 '</div></article>';
         }).join('') +'</div>'+
       '</div></section>'
     );

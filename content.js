@@ -233,6 +233,45 @@ window.SITE = {
         "lede": "A selection of platforms delivered across commerce, property and operations — alongside the software I build and ship myself.",
         "items": [
             {
+                "kind": "ERP",
+                "title": "NexEra Command ERP",
+                "text": "The operating system behind the NexEra group, built and run in production: inventory, multi-channel orders across Shopee, Lazada, TikTok, Facebook and web stores, warehousing, COD collection, returns and automatic merchant settlements — one source of truth from checkout to cash in the bank.",
+                "tags": [
+                    "Multi-channel",
+                    "Warehousing",
+                    "COD &amp; Returns",
+                    "Settlements"
+                ],
+                "href": "https://nexera-corp.com",
+                "linkLabel": "nexera-corp.com"
+            },
+            {
+                "kind": "Partner Platform",
+                "title": "NexEra Global",
+                "text": "A partner-growth platform built around a brand we make ourselves — eRAse Beauty Care from our own manufacturer, plus NexTap smart cards. Every partner gets direct partner pricing and their own online store, fulfilled automatically by NexEra so they can sell nationwide without holding a warehouse.",
+                "tags": [
+                    "Partner Network",
+                    "Own Online Store",
+                    "NexTap",
+                    "Fulfilment"
+                ],
+                "href": "https://nexera-global.net",
+                "linkLabel": "nexera-global.net"
+            },
+            {
+                "kind": "D2C Commerce",
+                "title": "Inersia",
+                "text": "A direct-to-consumer storefront for our skincare and haircare lines, built for the Philippine cash-on-delivery buyer — fast mobile checkout, ad and conversion tracking wired in, AI-assisted chat and call follow-up, and orders flowing straight into the ERP for fulfilment.",
+                "tags": [
+                    "Storefront",
+                    "Cash on Delivery",
+                    "Ads Tracking",
+                    "AI Follow-up"
+                ],
+                "href": "https://inersiamarketing.com",
+                "linkLabel": "inersiamarketing.com"
+            },
+            {
                 "kind": "Product",
                 "title": "Linya — Teleprompter for Creators",
                 "text": "My own shipped product: an offline Android teleprompter built for Filipino creators. The script follows your voice as you speak, floats over Facebook Live in an overlay, records straight from the camera, and rewrites itself with AI — all without a server.",
@@ -371,13 +410,28 @@ window.SITE = {
         "jobs": [
             {
                 "when": "2025 — Present",
-                "title": "Realty Specialist @ 88 Mega Mars Realty Inc.",
-                "text": "Real estate operations — property management, sales and marketing — modernised with digital systems: CRM, listings, online reservations, lead and marketing automation, and analytics dashboards.",
+                "title": "Founder &amp; Chief Systems Architect @ NexEra Holdings",
+                "text": "I don't just advise businesses on systems — I run my own on them. I designed and built the NexEra group's entire digital stack, end to end: the ERP that fulfils every order, the partner platform that grows the network, and the consumer store that sells direct. Three live platforms on one architecture, with an AI agent team watching the numbers, following up customers and flagging decisions around the clock. The same blueprint I now deliver for clients.",
                 "tags": [
-                    "Real Estate",
-                    "CRM",
-                    "Automation",
-                    "Digital Marketing"
+                    "Founder",
+                    "ERP",
+                    "E-Commerce",
+                    "AI Agents",
+                    "Fulfilment"
+                ],
+                "links": [
+                    {
+                        "href": "https://nexera-corp.com",
+                        "label": "nexera-corp.com"
+                    },
+                    {
+                        "href": "https://nexera-global.net",
+                        "label": "nexera-global.net"
+                    },
+                    {
+                        "href": "https://inersiamarketing.com",
+                        "label": "inersiamarketing.com"
+                    }
                 ]
             },
             {
