@@ -532,6 +532,40 @@ window.SITE = {
                     "Architecture"
                 ]
             }
+        ],
+        "completedHeading": "Trainings completed",
+        "completedLede": "I keep investing in how I lead, not just in what I build. In 2024 I completed the full I Am Plus (I AM+) Corporate Training System — Discovery, Breakthrough and Empower.",
+        "completed": [
+            {
+                "format": "2024 · Level 1",
+                "title": "Discovery",
+                "text": "The first stage of the I Am Plus (I AM+) Corporate Training System. An honest look at how I think, decide and show up: the beliefs and habits behind my results, at work and at home. It's where I learned that the system has to change before the output does, the same rule I apply to the businesses I build for.",
+                "tags": [
+                    "Self-awareness",
+                    "Personal mastery",
+                    "Accountability"
+                ]
+            },
+            {
+                "format": "2024 · Level 2",
+                "title": "Breakthrough",
+                "text": "Moving from insight to action: breaking the limits I had set on myself and committing to bold, measurable goals. Built on the I AM+ values of openness, integrity, passion, discipline and a limitless mindset. That push is what led me to found NexEra Holdings and take on larger, AI-driven builds.",
+                "tags": [
+                    "Integrity",
+                    "Discipline",
+                    "Limitless"
+                ]
+            },
+            {
+                "format": "2024 · Level 3",
+                "title": "Empower",
+                "text": "Leadership through contribution: turning personal change into the ability to lift a team, keep commitments and lead with compassion. It shapes how I run NexEra Holdings today, from mentoring the team to coaching clients through digital transformation.",
+                "tags": [
+                    "Leadership",
+                    "Empowerment",
+                    "Compassion"
+                ]
+            }
         ]
     },
     "contact": {
