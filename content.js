@@ -57,7 +57,7 @@ window.SITE = {
         "photo": "photo-20260727055545.jpg",
         "photoAlt": "Gio Asuncion",
         "photoLeft": "",
-        "photoRight": "I Am +",
+        "photoRight": "",
         "photoBadges": [
             { "n": 30, "k": "+ yrs", "v": "enterprise engineering" },
             { "k": "Founder", "v": "NexEra Holdings", "live": true },
