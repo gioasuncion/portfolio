@@ -57,7 +57,12 @@ window.SITE = {
         "photo": "photo-20260727055545.jpg",
         "photoAlt": "Gio Asuncion",
         "photoLeft": "Pasig City, PH",
-        "photoRight": "I Am +"
+        "photoRight": "I Am +",
+        "photoBadges": [
+            { "n": 30, "k": "+ yrs", "v": "enterprise engineering" },
+            { "k": "Founder", "v": "NexEra Holdings", "live": true },
+            { "k": "AI-first", "v": "ERP · E-commerce · Automation" }
+        ]
     },
     "expertise": {
         "label": "expertise",
