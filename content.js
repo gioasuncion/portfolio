@@ -56,7 +56,7 @@ window.SITE = {
         ],
         "photo": "photo-20260727055545.jpg",
         "photoAlt": "Gio Asuncion",
-        "photoLeft": "Valenzuela City, PH",
+        "photoLeft": "",
         "photoRight": "I Am +",
         "photoBadges": [
             { "n": 30, "k": "+ yrs", "v": "enterprise engineering" },
